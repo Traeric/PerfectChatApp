@@ -1,0 +1,59 @@
+@media only screen and (orientation:landscape) {
+body {-webkit-text-size-adjust:none}
+}
+@media only screen and (orientation:portrait) {
+body {-webkit-text-size-adjust:none}
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+body{ overflow-x: none}	
+.wrapper-inner p{ font-weight:300}
+.inner-right{  max-width: 590px;}
+.contact-form label{max-width:278px; font-weight:300}
+.footer-bot p{ font-weight:300}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+body{ overflow-x: none}
+.wrapper{ margin-bottom:0}
+.grid figure figcaption{ padding:3%}
+.grid figure figcaption p{ line-height:15px}
+.footer{ position:static; padding:20px 0}
+.wrapper-inner p{ font-weight:300}
+.inner-left,.inner-right,.wrapper-inner{ float:none;max-width:100%}
+.main-wrapper-inner{ margin-bottom:0}
+.contact-wrapper{ margin:30px 0}
+.contact-wrapper .phone,.contact-wrapper .email{ display:inline-block; text-align:center; width:45%}
+.contact-form label,.footer-bot p{ font-weight:300}
+.contact-wrapper header h4{ text-align:center}
+.wrapper-inner{ padding-top:20px}
+.post figure,.post{ margin-bottom:20px}
+.wrapper-inner p.cat-pan{ padding-bottom:0}
+}
+@media only screen and (max-width:767px) {
+body{ overflow-x: none}
+.wrapper{ margin-bottom:0}
+.wrapper-inner{ padding-top:20px}
+.grid figure figcaption h2{ font-size:20px}
+.grid figure figcaption p{ line-height:15px}
+.wrapper-inner p{ font-weight:300}
+.main-menu ul li.active::after,.main-menu ul li:hover::after{ width:50%}
+.footer{ position:static; padding:20px 0}
+.inner-left,.inner-right,.wrapper-inner{ float:none;max-width:100%}
+.main-wrapper-inner{ margin-bottom:20px}
+.details-image{ margin-bottom:20px}
+.contact-wrapper{ margin:30px 0}
+.contact-form label{max-width:100%; font-weight:300}
+.contact-wrapper .phone,.contact-wrapper .email{ display:inline-block; text-align:center; width:100%}
+.contact-wrapper header h4{ text-align:center}
+.footer-bot p{ font-weight:300}
+.post figure,.post{ margin-bottom:20px}
+.wrapper-inner p.cat-pan{ padding-bottom:0}
+.comments-pan h3{ padding-bottom:15px}
+.comments-reply li section{ width:100%; padding-left:0}
+.reply-pan{ margin-left:3%}
+.commentys-form input[type="text"], .commentys-form input[type="email"], .commentys-form input[type="url"], .commentys-form textarea{ margin-top:10px}
+}
+@media (min-width:480px) and (max-width:767px) {.grid figure figcaption{ padding:3%};.contact-wrapper .phone,.contact-wrapper .email{ display:inline-block; text-align:center; width:45%}.contact-form label{max-width:45%;}}
+@media only screen and (max-width:400px) {.small-block-grid-2 > li{ width:100%}}

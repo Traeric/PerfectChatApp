@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://demo.cssmoban.com/cssthemes4/cpts_645_bhc/index.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Chatting</title>
+
+    <!-- BOOTSTRAP STYLES-->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!-- FONTAWESOME STYLES-->
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+       <!--CUSTOM BASIC STYLES-->
+    <link href="/static/css/basic.css" rel="stylesheet">
+    <!--CUSTOM MAIN STYLES-->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!-- GOOGLE FONTS-->
+    <link href="/static/font/css" rel="stylesheet" type="text/css">
+    <style>
+        /*
+            清除浮动
+        */
+        .clearfix:after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+        #wrapper #page-inner{height: 900px;}
+        .contacts-panel{border: 1px dotted #aaa; margin: 30px 50px;}
+        .contacts-panel h2{margin: 20px 20px 0; line-height: 40px; text-align: center; padding: 10px 0;
+                           background-color: rgba(91, 192, 219, 0.5); border-radius: 16px 16px 0 0; color: rgba(0, 0, 0, 0.5);}
+        .content{margin: 0 20px; background-color: rgba(91, 192, 219, 0.8); padding: 50px 100px 0; height: 600px; overflow: auto;}
+        .send{background-color: rgba(91, 192, 219, 0.5); margin: 0 20px 20px; border-radius: 0 0 16px 16px; position: relative;}
+        .send .s_box{width: 40%;margin: 0 auto;}
+        .send .s_box .contact-content{width: 80%; background-color: #fff; border-radius: 6px; padding: 5px 6px; float: left;
+                                      margin: 30px 15px 30px 0;}
+        .send .s_box button{background-color: rgba(255, 255, 0, 0.7);border: 1px solid #0A0A0A; outline: none; width: 80px; padding: 5px; border-radius: 8px;
+                            font-weight: bolder; margin-top: 30px;}
+        .send .s_box button:active{background-color: rgba(255, 255, 0, 0.5);}
+        .contacts-panel{display: none;}
+        .content .wrap-box{margin-top: 20px;}
+        .content .wrap-box img{width: 50px; height: 50px; border-radius: 50%;}
+        .content .wrap-box .wb_content{background-color: #fff; margin-top: 15px; border-radius: 6px; line-height: 30px; padding: 5px 10px;
+                                       position: relative;}
+        .content .wrap-box .wb_content .trangle{width: 0; height: 0; border-width: 10px; border-style: solid; position: absolute; top: 10px;}
+    </style>
+    {% block css %}
+        {# put css here #}
+    {% endblock %}
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">完美聊天室</a>
+            </div>
+
+            <div class="header-right">
+                {% block history %}
+                {% endblock %}
+                {% block todo %}
+                {% endblock %}
+                {% block login_buttom %}
+                {% endblock %}
+            </div>
+        </nav>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <div class="user-img-div">
+                            <img src="/static/user_head/{% block image %}{# user image here #}{% endblock %}" class="img-thumbnail user-img">
+                            <div class="inner-text">
+                                用户名：
+                                <span class="user-name">
+                                    {% block username %}
+                                        {# user name here #}
+                                    {% endblock %}
+                                </span>
+                            <br>
+                                <small>距离上次登录 : {% block login %}{% endblock %} </small>
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="con">
+                        <a class="active-menu select" href="#"><i class="fa fa-dashboard "></i>群组</a>
+                        {% block group %}
+                        {% endblock %}
+                    </li>
+                    <li class="contact-tag con">
+                        <a class="select" href="javascript:void(0);"><i class="fa fa-desktop "></i>联系人<span class="fa arrow"></span></a>
+                        {% block contacts %}
+                        {% endblock %}
+                    </li>
+                     <li class="con">
+                        <a class="select" href="javascript:void(0);"><i class="fa fa-yelp "></i>设备<span class="fa arrow"></span></a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-head-line">完美聊天</h1>
+                        <div class="contacts-panel">
+                            <h2 class="name"></h2>
+                            <div class="content">
+                            </div>
+                            <div class="send">
+                                <div class="s_box clearfix">
+                                    <div class="contact-content" contenteditable="true" ></div>
+                                    <button class="send-button">发送</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <div id="footer-sec">
+        底部
+    </div>
+    {% block content %}
+        {# 模态框，上传头像 #}
+    {% endblock %}
+    <!-- /. FOOTER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="/static/js/bootstrap.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="/static/js/jquery.metisMenu.js"></script>
+       <!-- CUSTOM SCRIPTS -->
+    <script src="static/js/custom.js"></script>
+    {% block js %}
+        {# js here #}
+    {% endblock %}
+</body>
+</html>

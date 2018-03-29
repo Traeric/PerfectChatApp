@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>face</title>
+</head>
+<body>
+    <script>
+        (function(){
+            face();
+        }());
+
+        function face(){
+            var url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
+            var data = 'api_key=2m7lT8laBkcVpnKR3zqUI2wqdvkjvKgi&api_secret=R5Syqnte_p7TaYoPiLuR7h19NUbOf2Vv&image_url1=http://img1.imgtn.bdimg.com/it/u=2736509054,2589969075&fm=27&gp=0.jpg&image_url2=http://img0.imgtn.bdimg.com/it/u=1687848873,4245289807&fm=27&gp=0.jpg';
+            ajax_post(url, data, function(msg){
+                console.log(msg);
+            });
+        }
+
+
+
+        function ajax_post(url, data, callback){
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            // 拿取csrftoken
+            var cookie = document.cookie;
+            var cookies = cookie.split(";");
+            var cook = '';
+            cookies.forEach(function(item){
+                var msg = item.split("=");
+                if(msg[0] === "csrftoken"){
+                    cook = msg[1];
+                }
+            });
+            xhr.setRequestHeader("X-CSRFToken", cook);
+            xhr.onreadystatechange = function(){
+                if((this.status === 200) && (this.readyState === 4)){
+                    callback(this.responseText);
+                }
+            };
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>

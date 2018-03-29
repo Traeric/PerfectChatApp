@@ -1,0 +1,22 @@
+*{margin: 0; padding: 0;}
+#wrapper{width: 100%; min-height: 600px;}
+#wrapper .w_header{width: 100%; height: 100px; position: relative;}
+#wrapper .w_header .title{height: 100%; padding: 0 100px; line-height: 100px; position: absolute; top: 0;}
+#wrapper .w_header .title h1{font-family: "楷体"; color: #fff;}
+#wrapper .w_header .style{width: 5%; height: 100%; background-color: rgba(5, 243, 232, 0.7); float: left; border-radius: 0 0 52px 52px; box-shadow: 4px 4px 12px #000;}
+#wrapper .operation{width: 90%; height: 300px; margin: 10px auto 50px; background-color: rgba(5, 243, 232, 0.2); padding: 20px 0 10px; border-radius: 22px;}
+#wrapper .operation .o_now{width: 30%; height: 100%; float: left; margin-left: 100px;}
+#wrapper .operation .o_now img{width: 100%; height: 100%; border-radius: 22px;}
+#wrapper .operation .o_oper{width: 50%; height:100%; float: right;}
+#wrapper .operation .o_oper .change{width: 30%; height: 30%; background-color: rgba(122, 18, 0, 0.6); border-radius: 53px; line-height: 90px; text-align: center; color: #fff; margin: 70px auto 20px;
+                                    box-shadow: 6px 7px 12px #000; user-select: none; cursor: pointer; font-size: 22px; font-weight: bolder;}
+#wrapper .operation .o_oper .confirm{width: 30%; height: 30%; background-color: rgba(255, 118, 156, 0.6); border-radius: 53px; line-height: 90px; text-align: center; color: #fff; margin: 40px auto 0;
+                                    box-shadow: 6px 7px 12px #000; user-select: none; cursor: pointer; font-size: 22px; font-weight: bolder;}
+#wrapper .operation .o_oper div:active{box-shadow: none;}
+#wrapper .w_body{width: 90%; margin: 0 auto; position: relative;}
+#wrapper .w_body .box{padding: 5px; float: left; position: absolute;}
+#wrapper .w_body .box:hover{background-color: rgba(255, 0, 0, 0.5);}
+#wrapper .w_body .box img{width: 330px;}
+
+
+

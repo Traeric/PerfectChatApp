@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Successful</title>
+    <style>
+        div.content{height: 50px; width: 450px; margin: 200px auto; user-select: none; cursor: not-allowed;}
+        .bg{position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, .6); z-index: -99;}
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>注册成功！页面即将跳转...</h1>
+    </div>
+    <div class="bg"></div>
+    <script>
+        setTimeout(function(){
+            location.href = '/chat/login/';
+        }, 1000);
+    </script>
+</body>
+</html>

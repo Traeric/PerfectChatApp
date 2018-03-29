@@ -1,0 +1,103 @@
+{% extends "Home/tempregister.html" %}
+
+{% block js %}
+    <script>
+        (function(){
+            send_email();
+            submitEvent();
+        }());
+        // 表单提交事件
+        function submitEvent(){
+            var sub = document.getElementsByClassName("sub")[0];
+            var name = document.getElementsByClassName("name")[0];
+            var email = document.getElementsByClassName("email")[0];
+            var coding = document.getElementsByClassName("coding")[0];
+            sub.onclick = function(){
+                var flag = confirm_pwd();
+                if(!flag){
+                    document.getElementsByClassName("error")[0].innerHTML = "密码不一致！！！";
+                }
+                if((name.value === "") || (email === "") || (coding === "")){
+                    document.getElementsByClassName("error")[0].innerHTML = "不能输入空的内容！！！";
+                    flag = false;
+                }
+                return flag;
+            };
+        }
+        // 验证密码与确认密码是否一致
+        function confirm_pwd(){
+            var pwd = document.getElementsByClassName("pwd")[0].value;
+            var confirm_pwd = document.getElementsByClassName("c-pwd")[0].value;
+            if(pwd !== confirm_pwd){
+                return false;
+            }
+            return true;
+        }
+
+
+
+        // 按钮提交后发送邮箱至后台
+        function send_email(){
+            var coding_button = document.getElementsByClassName("coding-button")[0];
+            coding_button.onclick = click;
+        }
+        // 倒计时
+        var timer = null;
+        function count_time(button){
+            var count = 60;
+            // 清除定时器
+            clearInterval(timer);
+            timer = setInterval(function(){
+                // 清除点击事件
+                button.onclick = null;
+                button.innerHTML = count-- + 's';
+                if(count <= 0){
+                    // 恢复点击事件
+                    button.onclick = click;
+                    // 恢复按钮样式
+                    button.style.cssText = "background-color: #3071a9; opacity: 1;";
+                    button.innerHTML = '重新获取';
+                    // 清除定时器
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        // 点击事件
+        var email_box = document.getElementsByClassName("email")[0];
+        function click(){
+            // 设置按钮样式
+            this.style.cssText = "background: #4aaf51; opacity: 0.6;";
+            // 设置倒计时
+            count_time(this);
+            // 提交邮箱
+            var email = email_box.value;
+            ajax_post('/chat/email/', 'email=' + email, function(data){
+                alert(data);
+            });
+        }
+
+        // post请求提交
+        function ajax_post(url, data, callback){
+            // 拿到cookie
+            var cookie = document.cookie;
+            var cookies = cookie.split(";");
+            for(var i = 0; i < cookies.length; i++){
+                if(cookies[i].split("=")[0] === 'csrftoken'){
+                    var csrf = cookies[i].split("=")[1];
+                }
+            }
+            // 设置ajax
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("X-CSRFToken", csrf);
+            xhr.onreadystatechange = function(){
+                if((this.status === 200) && (this.readyState === 4)){
+                    callback(this.responseText);
+                }
+            };
+            xhr.send(data)
+        }
+    </script>
+{% endblock %}

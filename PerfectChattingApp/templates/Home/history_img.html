@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>history</title>
+    <link rel="stylesheet" href="/static/css/historyImg.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="w_header">
+            <div class="title">
+                <h1>{{ user }},这是你用过的头像</h1>
+            </div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+            <div class="style"></div>
+        </div>
+        <div class="operation">
+            <div class="o_now">
+                <img class="img_now" src="/static/user_head/{{ user }}/{{ now_img }}" alt="no img">
+            </div>
+            <div class="o_oper">
+                <div class="change">更换</div>
+                <div class="confirm"><a class="a_confirm" style="text-decoration: none; color: #fff;">确认</a></div>
+            </div>
+        </div>
+        <div class="w_body">
+            {% for img in history_img %}
+                <div class="box">
+                    <img src="/static/user_head/{{ user }}/{{ img }}" alt="no images" data-img="{{ img }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <textarea id="name" style="display: none;" >{{ user }}</textarea>
+    <script>
+        // 解决标题居中的问题
+        var titleDom = document.querySelector("#wrapper .w_header .title");
+        var wid = titleDom.offsetWidth;
+        titleDom.style.left = `calc(50% - ${wid/2}px)`;
+    </script>
+    <script src="/static/js/historyImg.js"></script>
+</body>
+</html>

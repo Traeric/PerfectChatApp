@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/index.html -->
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Register</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/static/font/css">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.css">
+		<link rel="stylesheet" href="/static/css/form-elements.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="http://demo.cssmoban.com/cssthemes4/azds_registration-forms/form-1/assets/ico/apple-touch-icon-57-precomposed.png">
+        <style>
+            .top-content .inner-bg .container .row .form-box .form-bottom .registration-form .form-group .coding{max-width: 250px; float: left; margin-right: 5px;}
+            .top-content .inner-bg .container .row .form-box .form-bottom .registration-form .form-group .coding-button{max-width: 150px; float: left; margin-bottom: 20px;}
+        </style>
+    </head>
+    <body>
+		<!-- Top menu -->
+		<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/chat/register/">完美聊天室注册</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="top-navbar-1">
+				</div>
+			</div>
+		</nav>
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-7 text">
+                            <h1><strong>完美聊天室</strong>注册表单</h1>
+                            <div class="description">
+                            	<p>
+                                    如果你还没有完美聊天室的账号，请填写你的邮箱用户名以及密码注册一个专属于你的账号吧
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>注册</h3>
+                            		<p>请填写以下注册信息:</p>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <form role="form" action="/chat/register/" enctype="application/x-www-form-urlencoded" method="post" class="registration-form">
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-first-name">First name</label>
+			                        	<input type="text" name="user_name" placeholder="your name..." class="form-first-name form-control name" id="form-first-name">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-email">Email</label>
+			                        	<input type="email" name="user_email" placeholder="Email..." class="form-email form-control email" id="form-email">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-last-name">Last name</label>
+			                        	<input type="password" name="user_pwd" placeholder="password..." class="form-last-name form-control pwd" id="form-last-name">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-about-yourself">About yourself</label>
+                                        <input type="password" name="comfirm_user_pwd" placeholder="confirm password..." class="form-last-name form-control c-pwd" id="form-last-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="confirm_code" placeholder="confirm code..." class="form-last-name form-control coding" id="form-last-name">
+                                        <button type="button" class="btn btn-primary btn-lg active coding-button">获取验证码</button>
+                                    </div>
+			                        <button type="submit" class="btn sub">注册</button>
+                                    <span style="font-size: 22px; font-weight: bolder; color: #f00;" class="error">{{ msg }}</span>
+                                    {% csrf_token %}
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="网站模板">网站模板</a></div>
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="/static/js/jquery-1.10.2.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/jquery.backstretch.min.js"></script>
+        <script src="/static/js/retina-1.1.0.min.js"></script>
+        <script src="/static/js/scripts.js"></script>
+
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+
+
+        <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 925px; width: 1903px; z-index: -999999; position: fixed;">
+            <img src="/static/images/register.jpg" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1903px; height: 1427.25px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -251.125px;">
+        </div>
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,493 @@
+{% extends "base.html" %}
+{% load imgPath %}
+
+{% block css %}
+    <style>
+        #modal_img{position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, .6); z-index: 1000; display: none;}
+        #modal_img .wrap{width: 800px; height: 600px; background-color: #e1dbde; margin: 100px auto; border: 1px solid #737275; border-radius: 22px;}
+        #modal_img .wrap .img_area{margin: 150px 0 0 20px; width: 300px; float: left;}
+        #modal_img .wrap .img_area img{width: 300px; height: 200px;}
+        #modal_img .wrap .send{width: 350px; height: 100%; float: right; position: relative; border-left: 2px dotted #aaa;}
+        #modal_img .wrap .send .con{width: 100%;  height: 200px; position: absolute; bottom: 50px;}
+        #modal_img .wrap .send .con .position{position: relative; width: 100%; height: 100%;}
+        #modal_img .wrap .send .con .position form iframe{width: 0; height: 0;}
+        #modal_img .wrap .send .con .position form .file{
+            position: relative;
+            display: inline-block;
+            background-color: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+        #modal_img .wrap .send .con .position form .file input{
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        #modal_img .wrap .send .con .position form .file:hover{
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+        #modal_img .wrap .send .con .position form .submit{background-color: #7bddff; border: 2px solid #53abff; border-radius: 5px; position: absolute; bottom: 10px; right: 10px;}
+        #modal_img .wrap .send .confirm{position: absolute; bottom: 10px; right: 10px; background-color: #7bddff; border: 2px solid #53abff; border-radius: 5px;}
+
+        #modal_add{display: none;}
+        #modal_add{position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, .5); z-index: 100;}
+        #modal_add .box{width: 350px; height: 300px; background-color: rgba(255, 122, 144, 0.5); margin: 200px 0 0 calc(50% - 175px); border-radius: 297px 297px 400px 400px;
+                        position: relative;}
+        #modal_add .box .top input{background-color: transparent; border: 2px dotted rgba(255, 255, 255, 0.5); outline: none; padding: 2px 5px; color: rgba(255, 255, 255, 0.7);}
+        #modal_add .box .top span{color: rgba(255, 255, 255, .5); font-weight: bolder; font-family: "impact"; font-size: 18px; user-select: none;}
+        #modal_add .box .top{padding-top: 80px; padding-left: 30px;}
+        #modal_add .box .bottom{padding-top: 60px; padding-left: 130px;}
+        #modal_add .box .bottom button{background-color: rgba(122, 243, 255, 0.6); outline: none; border: none; color: rgba(255, 255, 255, 0.5); font-weight: bolder; font-size: 16px;
+                                       padding: 5px 10px; border-radius: 8px; box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);}
+        #modal_add .box .bottom button:active{box-shadow: none; background-color: rgba(122, 243, 255, 0.8);}
+        #modal_add .box .style{width: 16px; height: 10px; background-color: rgba(0, 0, 0, 0.7); position: absolute; top: 20px; left: calc(50% - 8px); border-radius: 50%;
+                               box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);}
+        #modal_add .box .err{width: 100%; height: 30px; margin-top: 20px; text-align: center; color: #f00; font-weight: bolder; font-size: 16px;}
+        #modal_add .box .concel{position: absolute; width: 15px; height: 15px; background-color: rgba(255, 0, 0, 0.5); border-radius: 3px; color: rgba(255, 255, 255, 0.5);
+                                line-height: 12px; text-align: center; font-weight: bolder; bottom: 5px; left: calc(50% - 7px); cursor: pointer; user-select: none;}
+        .contact-add li{width: 100%; height: 45px; background-color: rgba(45, 198, 255, 0.5); border-bottom: 1px solid #000;}
+        .contact-add li:hover{background-color: rgba(45, 198, 255, 0.8);}
+        .contact-add{list-style: none; display: none;}
+        .contact-add li a{text-decoration: none; display: block; line-height: 45px; text-align: center; color: #fff;}
+        .contact-add li a img{width: 41px; height: 41px; border-radius: 50%; float: left; margin-left:10px; margin-top: 2px;}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="modal_img">
+        <div class="wrap">
+            <div class="img_area">
+                <img id="show-head-img" alt="no img">
+            </div>
+            <div class="send">
+                <div class="con">
+                    <div class="position">
+                        <form action="/chat/img_file.html/" method="post" enctype="multipart/form-data" target="iframe_img" >
+                            <iframe name="iframe_img" src="" frameborder="0"></iframe>
+                            <a href="javascript:void(0);" class="file">选择图片
+                                <input type="file" name="file" id="img">
+                            </a>
+                            <input type="button" class="submit" value="更换头像">
+                        </form>
+                    </div>
+                </div>
+                <button class="confirm">确定更换</button>
+            </div>
+        </div>
+    </div>
+    <!-- 加好友 -->
+    <div id="modal_add">
+        <div class="box">
+            <div class="style"></div>
+            <div class="concel">x</div>
+            <div class="top">
+                <span>好友昵称：</span><input type="text" name="contact" class="contact" >
+            </div>
+            <div class="err"></div>
+            <div class="bottom">
+                <button class="confirm-add">确认添加</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block login_buttom %}
+    <a href="/chat/login/?is_login=false" class="btn btn-danger login-out" title="退出登录">
+        <b>退出登录</b><i class="fa fa-exclamation-circle fa-2x"></i>
+    </a>
+{% endblock %}
+
+{% block todo %}
+    <a href="javascript:void(0);" class="btn btn-primary add-firend" title="加好友">
+        <b>加好友+</b><i class="fa fa-bars fa-2x"></i>
+    </a>
+    <a href="#" class="btn btn-primary" title="加群">
+        <b>加群+</b><i class="fa fa-bars fa-2x"></i>
+    </a>
+{% endblock %}
+
+{% block history %}
+    <a class="btn btn-info history" title="历史头像">
+        <b>历史头像</b><i class="fa fa-envelope-o fa-2x"></i>
+    </a>
+{% endblock %}
+
+{% block image %}{{ user_name }}/{{ img }}{% endblock %}
+
+{% block username %}
+    {{ user_name }}
+{% endblock %}
+
+{% block login %}
+    {{ last_date }}
+{% endblock %}
+
+{% block contacts %}
+    <ul class="contact-add">
+        {% for con in contact %}
+            <li>
+                <a class='contacts' href="javascript:void(0);" data-name="{{ con }}" data-path="{% contact con %}">
+                    <img src="/static/user_head/{{ con }}/{% contact con %}" alt="no img">
+                    {{ con }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var head_img = document.getElementsByClassName("img-thumbnail")[0];
+        var arr_path = document.getElementsByClassName("user-img")[0].getAttribute("src").split("/");
+        // 拿到现在头像的图片名
+        var path_img = arr_path[arr_path.length - 1];
+        var imgDom = document.getElementById("show-head-img");
+        // 拿到用户名
+        var user_name = document.getElementsByClassName("user-name")[0].innerText;
+        // 给历史头像按钮设置超链接
+        document.getElementsByClassName("history")[0].href = '/chat/history_img.html/?now_img=' + path_img + '&user=' + user_name;
+        // 显示模态框的图片
+        imgDom.setAttribute("src", '/static/user_head/' + user_name.trim()  + '/' +  path_img);
+        (function(){
+            change_head_img();
+            confirmEvent();
+            activeUpload();
+            addFirend();
+            contacts();
+        }());
+
+        // 点击换头像
+        var modalDom = document.getElementById("modal_img");
+        function change_head_img(){
+            head_img.addEventListener('click', function(){
+                modalDom.style.display = 'block';
+            });
+        }
+        // 点击确认隐藏更换框
+        function confirmEvent(){
+            var confirmDom = document.getElementsByClassName("confirm")[0];
+            confirmDom.onclick = function(){
+                // 隐藏
+                modalDom.style.display = 'none';
+                // 加载头像
+                document.getElementsByClassName("user-img")[0].setAttribute('src', '/static/user_head/' + user_name.trim()  + '/' +  path_img);
+            }
+        }
+        // 点击上传
+        function activeUpload(){
+            var buttom_imgDom = document.getElementsByClassName("submit")[0];
+            buttom_imgDom.onclick = function(){
+                Upload();
+            };
+        }
+        // 上传图片
+        function Upload(){
+            // 拿到文件, 将文件放进FormData中
+            var dict = new FormData();
+            dict.append("user_name", user_name);
+            dict.append('img_file', document.getElementById("img").files[0]);
+            // ajax发送
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", "/chat/img_file.html/", true);
+            var cookie = document.cookie;
+            var cookies = cookie.split(";");
+            var coo = '';
+            cookies.forEach(function(item){
+                if(item.split("=")[0] === "csrftoken"){
+                    coo = item.split("=")[1];
+                }
+            });
+            xhr.setRequestHeader('X-CSRFToken', coo);
+            xhr.onreadystatechange = function(){
+                if((this.status === 200) && (this.readyState === 4)){
+                    // 拿到图片名字
+                    var img_path = this.responseText;
+                    path_img = img_path;
+                    imgDom.setAttribute("src", '/static/user_head/' + user_name.trim() + '/' + img_path);
+                }
+            };
+            xhr.send(dict);
+        }
+
+
+
+        // 加好友
+    function addFirend(){
+        var buttomDom = document.getElementsByClassName("add-firend")[0];
+        var modalDom = document.getElementById("modal_add");
+        var concelDom = document.getElementsByClassName("concel")[0];
+        var confirmDom = document.getElementsByClassName("confirm-add")[0];
+        var friendDom = document.getElementsByClassName("contact")[0];
+        var errDom = document.getElementsByClassName("err")[0];
+        var contact_add = document.getElementsByClassName("contact-add")[0];
+        // 点击加好友弹出模态框
+        buttomDom.addEventListener('click', function(){
+            modalDom.style.display = 'block';
+        });
+        // 点击红叉隐藏模态对话框
+        concelDom.onclick = function() {
+            errDom.innerHTML = '';
+            modalDom.style.display = 'none';
+        };
+        // 点击确认添加获取好友信息
+        confirmDom.onclick = function(){
+            // 拿到输入框里面的值
+            var friend_msg = friendDom.value.trim();
+            if(friend_msg === ""){
+                // 如果输入内容为空
+                errDom.innerHTML = '好友昵称不能为空';
+                friendDom.value = '';
+            }else{
+                // 如果不为空，将要添加的好友信息发送给后台处理
+                ajax_post("/chatting/add_contact/", 'contact=' + friend_msg + "&user_name=" + user_name, function(msg){
+                    let data = JSON.parse(msg);
+                    let remsg = data["msg"] * 1;
+                    if(remsg === 4000){
+                        errDom.innerHTML = '抱歉，没有该用户';
+                        friendDom.value = '';
+                    }else if(remsg === 4001){
+                        errDom.innerHTML = '不能添加你自己';
+                        friendDom.value = '';
+                    }else if(remsg === 4002){
+                        errDom.innerHTML = '你已添加该用户';
+                        friendDom.value = '';
+                    }else{
+                        contact_add.innerHTML += `<li>
+                                                      <a class="contacts" href="javascript:void(0);" data-name="${friend_msg}" data-path="${data["path"]}" >
+                                                          <img src="/static/user_head/${friend_msg}/${data["path"]}" alt="no img">
+                                                          ${friend_msg}
+                                                      </a>
+                                                  </li>`;
+                        // 关闭模态对话框，清空错误提示内容
+                        errDom.innerHTML = '';
+                        modalDom.style.display = 'none';
+                    }
+                });
+            }
+        };
+    }
+
+    // ajax发送post请求
+    function ajax_post(url, data, callback){
+            // 获取页面cookie
+            let cookie = '';
+            let cookieStr = document.cookie;
+            let cookieArr = cookieStr.split(";");
+            cookieArr.forEach(function(item){
+                if(item.split("=")[0].trim() === "csrftoken"){
+                    cookie = item.split("=")[1];
+                }
+            });
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("post", url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("X-CSRFToken", cookie);
+            xhr.onreadystatechange = function(){
+                if((this.status === 200) && (this.readyState === 4)){
+                    callback(this.responseText);
+                }
+            };
+            xhr.send(data);
+    }
+
+    // 联系人列表
+    function contacts(){
+        var ulDom = document.getElementsByClassName("contact-add")[0];
+        var aDom = document.querySelectorAll(".nav .con .select");
+        var temp = 0;
+        let flag = true;
+        aDom[1].onclick = function(){
+            flag ? ulDom.style.display = 'block'
+                 : ulDom.style.display = 'none';
+            flag = !flag;
+        };
+        // 点击左侧的选项卡改变样式
+        for(let x = 0; x < aDom.length; x++){
+            aDom[x].addEventListener('click', function(){
+                this.index = x;
+                aDom[temp].setAttribute('class', "");
+                this.setAttribute('class', "active-menu select");
+                temp = this.index;
+            });
+        }
+
+        // 点击联系人右边出现对话框
+        var contactsDom = document.querySelector(".nav .con ul");  // 获取所有的联系人所在的的ul列表
+        // 获取右侧聊天面板
+        var chatDom = document.getElementsByClassName("contacts-panel")[0];
+        // 获取名字显示区域
+        var nameDom = document.querySelector(".contacts-panel .name");
+        // 点击改变颜色
+        var tempDom = null;
+        // 聊天对象
+        var name = '';
+        contactsDom.onclick = function(event){
+            var e = event || window.event;
+            var dom = e.target || e.srcElement;
+            if(dom.localName === "a"){
+                // 改变被点击的联系人的背景颜色
+                (tempDom !== null) && (tempDom.style.backgroundColor = 'rgb(66, 139, 202)');
+                dom.style.backgroundColor = '#fa0';
+                tempDom = dom;
+                // 先让面板显示
+                chatDom.style.display = 'block';
+                // 获取聊天对象
+                name = dom.dataset.name;
+                // 将名字渲染到聊天页面上
+                nameDom.innerHTML = name;
+                // 获取聊天内容
+                msg(user_name, name, dom.dataset.path);
+            }
+        };
+        // 发送消息
+        var sendDom = document.getElementsByClassName("send-button")[0];
+        var contentDom = document.getElementsByClassName("contact-content")[0];
+        // 拿到聊天窗口的节点
+        let chatFramDom = document.getElementsByClassName("content")[0];
+        sendDom.addEventListener("click", function(){
+            // 获取发送内容
+            var content = contentDom.innerHTML;
+            if(content.trim() === ''){
+                // 如果内容为空
+                alert('发送内容不能为空');
+            }else{
+                // 如果内容不为空
+                // 清除发送框内容
+                contentDom.innerHTML = '';
+                /**
+                 * 将内容发送给后台，后台储存成功后返回成功信息
+                 * 然后在返回成功信息后将内容渲染出去
+                 */
+                // 发送数据给后台
+                ajax_post('/chatting/send_msg/', 'content=' + content + '&from=' + user_name + '&to=' + name, function(msg){
+                    /*// 如果成功添加，那么将发送内容渲染到聊天窗口上
+                    if(msg === "ok"){
+                        chatFramDom.innerHTML += `
+                            <div class="wrap-box clearfix">
+                                <img src="/static/user_head/${user_name.trim()}/${path_img}" alt="no img" style="float: right; margin-left: 20px;">
+                                <div class="wb_content" style="float: right;">
+                                    <div class="trangle" style="right: -20px;  border-color: transparent transparent transparent #fff;"></div>
+                                    ${content}
+                                </div>
+                            </div>
+                        `;
+                    }*/
+                    console.log(msg);
+                });
+            }
+        });
+    }
+
+    /**
+     * 进行消息渲染，每40ms请求一次数据
+     */
+    let timer = null;
+    let count = 0;
+    let target = 0;
+    // 设置消息提醒
+    let div = document.createElement("div");
+    div.className = 'msg-target';
+    div.style.cssText = `
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-weight: bolder;
+        border-radius: 50%;
+        background-color: rgba(255, 192, 219, 0.98);
+        padding: 2px 5px;
+        position: absolute;
+        right: 40px;
+        top: -40px;
+        display: none;
+    `;
+    document.getElementsByClassName("send")[0].appendChild(div);
+    function msg(from, to, path){
+        // 清除定时器
+        (timer != null) && (clearInterval(timer));
+        // 拿到聊天窗口的节点
+        let chatFramDom = document.getElementsByClassName("content")[0];
+        // 清除窗口
+        chatFramDom.innerHTML = '';
+        count = 0;
+        timer = setInterval(function(){
+            // 发送请求
+            ajax_get('/chatting/send_msg/?', 'from=' + from + "&to=" + to, function(msg){
+                let info = JSON.parse(msg);
+                if(info.length > count){  // 如果大于就将新的消息渲染到聊天窗口
+                    for(let i = count; i < info.length; i++){
+                        if(info[i][0] === 'me'){
+                            chatFramDom.innerHTML += `
+                                <div class="wrap-box clearfix">
+                                    <img src="/static/user_head/${from.trim()}/${path_img.trim()}" alt="no img" style="float: right; margin-left: 20px;">
+                                    <div class="wb_content" style="float: right;">
+                                        <div class="trangle" style="right: -20px;  border-color: transparent transparent transparent #fff;"></div>
+                                        ${info[i][1]}
+                                    </div>
+                                </div>
+                            `;
+                        }else{
+                            chatFramDom.innerHTML += `
+                                <div class="wrap-box clearfix">
+                                    <img src="/static/user_head/${to.trim()}/${path.trim()}" alt="no img" style="float: left; margin-right: 20px;">
+                                    <div class="wb_content" style="float: left;">
+                                        <div class="trangle" style="left: -20px;  border-color: transparent #fff transparent transparent;"></div>
+                                        ${info[i][1]}
+                                    </div>
+                                </div>
+                            `;
+                            /*
+                              设置消息提醒
+                             */
+                            if(count !== 0){
+                                document.getElementsByClassName("msg-target")[0].style.display = 'block';
+                                document.getElementsByClassName("msg-target")[0].innerHTML = ++target + '';
+                            }
+                        }
+                    }
+                    // 保存消息条数
+                    count = info.length;
+                }
+            });
+        }, 40);
+        /*
+          检测鼠标滚轮事件
+         */
+        chatFramDom.onmouseover = function(){
+            document.onmousewheel = function(event){
+                var e = event || window.event;
+                if(e.wheelDelta < 0){
+                    target = 0;
+                    document.getElementsByClassName("msg-target")[0].style.display = 'none';
+                }
+            };
+            this.onmouseout = function(){
+                document.onmousewheel = null;
+            };
+        };
+    }
+
+    function ajax_get(url, data, callback){
+        let xhr = new XMLHttpRequest();
+        xhr.open('get', url + data, true);
+        xhr.onreadystatechange = function(){
+            if((this.status === 200) && (this.readyState === 4)){
+                callback(this.responseText);
+            }
+        };
+        xhr.send();
+    }
+    </script>
+{% endblock %}
